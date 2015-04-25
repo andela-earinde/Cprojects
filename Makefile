@@ -1,7 +1,7 @@
 CFLAGS=-Wall	-g	-ledit
 
-all:fourth
+all:fifth
 
 clean:
-	rm -rf fourth fourth.dSYM 
+	rm -rf fifth fifth.dSYM 
 
