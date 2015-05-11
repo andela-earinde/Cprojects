@@ -1,7 +1,7 @@
 CFLAGS=-Wall	-g	-ledit
 
-all:tenth
+all:tenthex
 
 clean:
-	rm -rf tenth tenth.dSYM 
+	rm -rf tenthex tenthex.dSYM 
 
