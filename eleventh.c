@@ -19,7 +19,7 @@ struct Database {
 };
 
 struct Connection {
-  FILE *file 
+  FILE *file;
   struct Database *db;
 };
 
@@ -40,7 +40,7 @@ void Address_print(struct Address *addr) {
 
 void Database_load(struct Connection *conn) {
   int rc = fread(conn->db, sizeof(struct Database), 1, conn->file);
-  if(rc != 1) die('Failed to load database.');
+  if(rc != 1) die("Failed to load database.");
 }
 
 struct Connection *Database_open(const char *filename, char mode) {
@@ -52,10 +52,10 @@ struct Connection *Database_open(const char *filename, char mode) {
   if(!conn->db) die("Memory error");
 
   if(mode == 'c') {
-    conn->file = fopen(filename, 'w');
+    conn->file = fopen(filename, "w");
   }
   else{
-    conn->file = fopen(filename, 'r+');
+    conn->file = fopen(filename, "r+");
 
     if(conn->file) {
       Database_load(conn);
@@ -68,7 +68,7 @@ struct Connection *Database_open(const char *filename, char mode) {
 
 void Database_close(struct Connection *conn) {
   if(conn) {
-    if(conn->fil) fclose(conn->file);
+    if(conn->file) fclose(conn->file);
     if(conn->db) free(conn->db);
     free(conn);
   }
@@ -99,7 +99,7 @@ void Database_set(struct Connection *conn, int id, const char *name, const char 
 
   addr->set = 1;
   char *res = strncpy(addr->name, name, MAX_DATA);
-  if(!res) die("Name copy failed")
+  if(!res) die("Name copy failed");
 
   res = strncpy(addr->email, email, MAX_DATA);
   if(!res) die("Email copy failed");
@@ -116,7 +116,7 @@ void Database_get(struct Connection *conn, int id) {
   }
 }
 
-void Databse_delete(struct Connection *conn, int id) {
+void Database_delete(struct Connection *conn, int id) {
   struct Address addr = {.id = 1, .set = 0};
   conn->db->rows[id] = addr;
 }
