@@ -98,6 +98,7 @@ void Database_set(struct Connection *conn, int id, const char *name, const char 
   if(addr->set) die("Already set, delete it first");
 
   addr->set = 1;
+  addr->id = id;
   char *res = strncpy(addr->name, name, MAX_DATA);
   if(!res) die("Name copy failed");
 
@@ -121,7 +122,7 @@ void Database_delete(struct Connection *conn, int id) {
   conn->db->rows[id] = addr;
 }
 
-void Databse_list(struct Connection *conn) {
+void Database_list(struct Connection *conn) {
   int i = 0;
   struct Database *db = conn->db;
 
@@ -131,6 +132,26 @@ void Databse_list(struct Connection *conn) {
     if(cur->set) {
       Address_print(cur);
     }
+  }
+}
+
+void Database_find(struct Connection *conn, char *type, char *param) {
+  struct Database *data = conn->db;
+  int i = 0;
+
+  if(strcmp(type, "name") == 0) {
+    for(i = 0; i < MAX_ROWS; i++) {
+      if(strcmp(data->rows[i].name, param) == 0) {
+        Address_print(&data->rows[i]);
+      }
+    }
+  }
+  else if(strcmp(type, "email") == 0) {
+    for(i = 0; i < MAX_ROWS; i++) {
+      if(strcmp(data->rows[i].email, param) == 0) {
+        Address_print(&data->rows[i]);
+      }
+    }  
   }
 }
 
@@ -173,7 +194,12 @@ int main(int argc, char *argv[]) {
       break;
 
     case 'l':
-      Databse_list(conn);
+      Database_list(conn);
+      break;
+
+    case 'f':
+      if(argc != 5) die("Need the type and string to find");
+      Database_find(conn, argv[3], argv[4]);
       break;
 
     default:
