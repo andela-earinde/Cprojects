@@ -1,7 +1,7 @@
 CFLAGS=-Wall	-g	-ledit
 
-all:eleventh
+all:twelveth
 
 clean:
-	rm -rf eleventh eleventh.dSYM 
+	rm -rf twelveth twelveth.dSYM 
 

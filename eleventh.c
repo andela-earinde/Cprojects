@@ -153,6 +153,9 @@ void Database_find(struct Connection *conn, char *type, char *param) {
       }
     }  
   }
+  else{
+    die("You can only search by name or email");
+  }
 }
 
 int main(int argc, char *argv[]) {
