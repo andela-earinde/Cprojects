@@ -94,3 +94,104 @@ void *Map_move(void *self, Direction direction) {
   }
   return next;
 }
+
+int Map_attack(void *self, int damage) {
+  Map *map = self;
+  Room *location = map->location;
+
+  return location->_(attack)(location, damage)
+}
+
+int Map_init(void *self) {
+  Map *map = self;
+
+  Room *hall = New(Room, "The great Hall");
+  Room *throne = New(Room, "The throne room");
+  Room *arena = New(Room, "The arena, with the minotaur");
+  Room *kitchen = New(Room, "You have a knife now");
+
+  arena->bad_guy = New(Monster, "The evil minotaur");
+
+  hall->north = throne;
+
+  throne->west = arena;
+  throne->east = kitchen;
+  throne->south = hall;
+
+  arena->east = throne;
+  kitchen->west = throne;
+
+  map->start = hall;
+  map->location = hall;
+
+  return 1;
+}
+
+Object MapProto = {
+  .init = Map_init,
+  .move = Map_move,
+  .attack = Map_attack 
+}
+
+int process_input(Map *game) {
+  printf("\n> ");
+
+  char ch = getchar();
+  getchar();
+
+  int damage = rand() % 4;
+
+  switch(ch) {
+    case -1:
+        printf("Giving up? You suck!");
+        return 0;
+        break;
+
+    case 'n':
+        game->_(move)(game, NORTH);
+        break;
+
+    case 's':
+        game->_(move)(game, SOUTH);
+        break;
+
+    case 'e':
+        game->_(move)(game, EAST);
+        break;
+
+    case 'w':
+        game->_(move)(game, WEST);
+        break;  
+
+    case 'a':
+        game->_(attack)(game, damage);
+        break;
+
+    case 'l':
+        printf("You can go:\n");
+        if(game->location->north) printf("NORTH\n");
+        if(game->location->south) printf("SOUTH\n");
+        if(game->location->east) printf("EAST\n");
+        if(game->location->west) printf("WEST\n");
+        break;
+
+    default:
+        printf("What?: %d\n", ch);
+  }
+  return 1;
+}
+
+int main(int argc, char *argv[]) {
+
+  srand(time(NULL));
+
+  Map *game = New(Map, "The Hall of the Minotaur");
+
+  printf("You enter the ");
+  game->location->_(describe)(game->location);
+
+  while(process_input(game)) {
+
+  }
+  return 0;
+}
