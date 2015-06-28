@@ -99,18 +99,18 @@ int Map_attack(void *self, int damage) {
   Map *map = self;
   Room *location = map->location;
 
-  return location->_(attack)(location, damage)
+  return location->_(attack)(location, damage);
 }
 
 int Map_init(void *self) {
   Map *map = self;
 
-  Room *hall = New(Room, "The great Hall");
-  Room *throne = New(Room, "The throne room");
-  Room *arena = New(Room, "The arena, with the minotaur");
-  Room *kitchen = New(Room, "You have a knife now");
+  Room *hall = NEW(Room, "The great Hall");
+  Room *throne = NEW(Room, "The throne room");
+  Room *arena = NEW(Room, "The arena, with the minotaur");
+  Room *kitchen = NEW(Room, "You have a knife now");
 
-  arena->bad_guy = New(Monster, "The evil minotaur");
+  arena->bad_guy = NEW(Monster, "The evil minotaur");
 
   hall->north = throne;
 
@@ -131,7 +131,7 @@ Object MapProto = {
   .init = Map_init,
   .move = Map_move,
   .attack = Map_attack 
-}
+};
 
 int process_input(Map *game) {
   printf("\n> ");
@@ -185,7 +185,7 @@ int main(int argc, char *argv[]) {
 
   srand(time(NULL));
 
-  Map *game = New(Map, "The Hall of the Minotaur");
+  Map *game = NEW(Map, "The Hall of the Minotaur");
 
   printf("You enter the ");
   game->location->_(describe)(game->location);

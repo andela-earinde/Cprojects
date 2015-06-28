@@ -2,7 +2,7 @@ CFLAGS=-Wall -g
 
 all: ex13
 
-ex19: object.o
+ex13: object.o
 
 clean:
-	  rm -f ex13 ex13.dSYM
+	  rm -rf ex13 ex13.dSYM

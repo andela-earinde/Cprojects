@@ -18,7 +18,7 @@ void Object_describe(void *self) {
   printf("%s.\n", obj->description);
 }
 
-void Object_init(void *self) {
+int Object_init(void *self) {
   return 1;
 }
 
