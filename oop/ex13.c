@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <assert.h>
 #include "ex13.h"
 
 int Monster_attack(void *self, int damage) {

@@ -42,9 +42,9 @@ int *bubble_sort(int *numbers, int count, compare_cb cmp) {
 }
 
 int *selection_sort(int *numbers, int count, compare_cb cmp) {
-  
+
   int i = 0;
-  int min = 0; 
+  int min = 0;
   int temp = 0;
   int *target = malloc(count * sizeof(int));
   if(!target) die("Memory error.");

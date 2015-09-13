@@ -24,7 +24,7 @@ void add_history(char* unused) {}
 int main(int argc, char** argv){
   puts("Lispy version 0.0.0.0.1");
   puts("Press Ctrl+c to Exit\n");
-  
+
   while(1) {
 
   	char* input = readline("lispy> ");
